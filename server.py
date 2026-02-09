@@ -1,5 +1,4 @@
 from mcp.server.fastmcp import FastMCP
-import asyncio
 
 mcp = FastMCP("server")
 
@@ -9,10 +8,8 @@ def greeting(name: str) -> str:
     return f"Hi {name}"
 
 if __name__ == "__main__":
-    asyncio.run(
-        mcp.run_async(
-            transport="streamable-http",
-            host="0.0.0.0",
-            port=8000
-        )
-    )
+    import uvicorn
+    from mcp.server.streamable_http import create_app
+    
+    app = create_app(mcp)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
