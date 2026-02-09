@@ -1,4 +1,5 @@
 from mcp.server.fastmcp import FastMCP
+import asyncio
 
 mcp = FastMCP("server")
 
@@ -8,4 +9,10 @@ def greeting(name: str) -> str:
     return f"Hi {name}"
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    asyncio.run(
+        mcp.run_async(
+            transport="streamable-http",
+            host="0.0.0.0",
+            port=8000
+        )
+    )
